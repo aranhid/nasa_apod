@@ -11,4 +11,7 @@ public interface NasaApi {
 
     @GET("/planetary/apod")
     Call<ApodResponse> getApod(@Query("api_key") String apiKey);
+
+    @GET("/planetary/apod")
+    Call<ApodResponse> getApodByDate(@Query("api_key") String apiKey, @Query("date") String date);
 }

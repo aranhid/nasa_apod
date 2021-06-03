@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
         title = root.findViewById(R.id.title);
         image = root.findViewById(R.id.image);
         date = root.findViewById(R.id.date);
@@ -59,8 +60,6 @@ public class HomeFragment extends Fragment {
 
         Call<ApodResponse> call = nasaApi.getApod(NasaApi.API_KEY);
         call.enqueue(new ApodCallback());
-
-        Gson gson = new Gson();
 
         return root;
     }

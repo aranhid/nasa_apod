@@ -20,7 +20,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:scrollbars="vertical">
@@ -29,7 +29,7 @@
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Test"
+                    android:text="@string/wait"
                     android:textAlignment="center"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -43,7 +43,6 @@
                     android:id="@+id/date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="2021.06.03"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -52,7 +51,6 @@
                     android:id="@+id/explanation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Test description"
                     android:textAlignment="viewStart" />
             </LinearLayout>
         </ScrollView>
