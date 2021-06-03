@@ -104,7 +104,7 @@ public class SpecificDateFragment extends Fragment implements View.OnClickListen
                 SearchHistory searchHistory = db.searchHistory();
                 SearchHistoryItem check = searchHistory.findByDate(data.date);
                 if (check == null) {
-                    SearchHistoryItem item = new SearchHistoryItem(data.date, data.title, data.hdurl);
+                    SearchHistoryItem item = new SearchHistoryItem(data.date, data.title, data.hdurl, data.explanation);
                     searchHistory.insert(item);
                 }
                 Log.d("TAG", "Inserted");

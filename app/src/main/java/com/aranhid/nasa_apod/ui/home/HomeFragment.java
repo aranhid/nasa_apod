@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
                 SearchHistory searchHistory = db.searchHistory();
                 SearchHistoryItem check = searchHistory.findByDate(data.date);
                 if (check == null) {
-                    SearchHistoryItem item = new SearchHistoryItem(data.date, data.title, data.hdurl);
+                    SearchHistoryItem item = new SearchHistoryItem(data.date, data.title, data.hdurl, data.explanation);
                     searchHistory.insert(item);
                 }
                 Log.d("TAG", "Inserted");

@@ -16,21 +16,24 @@ public class SearchHistoryItem {
     String date;
     String title;
     String image_url;
+    String explanation;
 
 
-    public SearchHistoryItem(int _id, String date, String title, String image_url){
+    public SearchHistoryItem(int _id, String date, String title, String image_url, String explanation){
         this._id = _id;
         this.date = date;
         this.title = title;
         this.image_url = image_url;
+        this.explanation = explanation;
     }
 
     @Ignore
-    public SearchHistoryItem(String date, String title, String image_url){
+    public SearchHistoryItem(String date, String title, String image_url, String explanation){
         this._id = _id;
         this.date = date;
         this.title = title;
         this.image_url = image_url;
+        this.explanation = explanation;
     }
 
     @Override
