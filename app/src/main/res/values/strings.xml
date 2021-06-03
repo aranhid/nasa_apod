@@ -5,4 +5,5 @@
     <string name="title_specific_date">Date</string>
     <string name="wait">Please wait...</string>
     <string name="get_image">Get image</string>
+    <string name="choose_date">Choose a date</string>
 </resources>

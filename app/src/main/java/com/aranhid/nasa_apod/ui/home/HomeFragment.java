@@ -1,5 +1,6 @@
 package com.aranhid.nasa_apod.ui.home;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,15 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.aranhid.nasa_apod.ApodResponse;
 import com.aranhid.nasa_apod.NasaApi;
 import com.aranhid.nasa_apod.R;
-import com.google.gson.Gson;
+import com.aranhid.nasa_apod.SearchHistory;
+import com.aranhid.nasa_apod.SearchHistoryDB;
+import com.aranhid.nasa_apod.SearchHistoryItem;
 import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
@@ -41,9 +42,13 @@ public class HomeFragment extends Fragment {
     Retrofit retrofit;
     NasaApi nasaApi;
 
+    SearchHistoryDB db;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        db = SearchHistoryDB.create(this.getContext(), false);
 
         title = root.findViewById(R.id.title);
         image = root.findViewById(R.id.image);
@@ -64,11 +69,26 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    public void UpdateData(ApodResponse data) {
+    public void updateData(ApodResponse data) {
         title.setText(data.title);
         date.setText(data.date);
         explanation.setText(data.explanation);
         Picasso.get().load(data.hdurl).into(image);
+    }
+
+    public void insertInHistory(ApodResponse data) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                SearchHistory searchHistory = db.searchHistory();
+                SearchHistoryItem check = searchHistory.findByDate(data.date);
+                if (check == null) {
+                    SearchHistoryItem item = new SearchHistoryItem(data.date, data.title, data.hdurl);
+                    searchHistory.insert(item);
+                }
+                Log.d("TAG", "Inserted");
+            }
+        });
     }
 
     class ApodCallback implements Callback<ApodResponse> {
@@ -76,7 +96,8 @@ public class HomeFragment extends Fragment {
         @Override
         public void onResponse(Call<ApodResponse> call, Response<ApodResponse> response) {
             if (response.isSuccessful()) {
-                UpdateData(response.body());
+                updateData(response.body());
+                insertInHistory(response.body());
                 Log.d(TAG, "Request is successful");
             } else {
                 Log.d(TAG, "onResponse: " + response.code());
